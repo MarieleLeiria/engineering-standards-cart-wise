@@ -1,0 +1,106 @@
+# Índice legível por máquina do repositório agentflow-engineering-standards.
+# O contrato de manifesto e frontmatter está em agentflow-architecture:adr-0006.
+# Os campos de cada documento devem ser idênticos aos do frontmatter do arquivo.
+
+schema_version: 1
+repository: agentflow-engineering-standards
+product: cart-wise
+language: pt-BR
+
+vocabulary:
+  type:
+    overview: Escopo dos padrões, precedência entre repositórios e vocabulário.
+    standard: Padrão de engenharia com id estável STD.
+    process: Procedimento passo a passo para entregar ou validar uma mudança.
+    checklist: Lista verificável usada na revisão.
+
+  status:
+    proposed: Orientação. O agente segue, mas sinaliza no resultado quando depende do documento.
+    accepted: Obrigatório.
+    superseded: Ignorado. Ver superseded_by.
+    deprecated: Ignorado.
+    rejected: Ignorado.
+
+  consult_when:
+    any-task: Toda tarefa.
+    write-code: Escrever ou alterar código de produção.
+    add-module: Criar arquivo, diretório ou módulo novo.
+    write-tests: Escrever ou alterar testes.
+    change-security: Alterar permissões, dependências, segredos ou o manuseio de HTML e dados externos.
+    commit-and-pr: Criar branch, commit ou pull request.
+    review-code: Revisar uma mudança antes do merge.
+    validate-work: Rodar as validações e decidir se a tarefa está pronta.
+
+section_order:
+  overview: [Objetivo, Precedência, Glossário, Questões em aberto, Regras para agentes]
+  standard: [Objetivo, Padrões, Exemplos, Questões em aberto, Regras para agentes]
+  process: [Objetivo, Entradas, Passos, Saídas, Falhas, Questões em aberto, Regras para agentes]
+  checklist: [Objetivo, Checklist, Severidade, Questões em aberto, Regras para agentes]
+
+templates:
+  standard: templates/standard.md
+
+documents:
+  - id: overview
+    path: docs/00-overview.md
+    type: overview
+    status: proposed
+    consult_when: [any-task]
+    applies_to: ["**"]
+    tags: [escopo, precedencia, vocabulario]
+
+  - id: code-style
+    path: docs/01-code-style.md
+    type: standard
+    status: proposed
+    consult_when: [write-code]
+    applies_to: ["src/**"]
+    tags: [typescript, react, eslint, prettier]
+
+  - id: file-organization
+    path: docs/02-file-organization.md
+    type: standard
+    status: proposed
+    consult_when: [write-code, add-module]
+    applies_to: ["src/**", "tests/**"]
+    tags: [diretorios, dependencias, testes]
+
+  - id: testing
+    path: docs/03-testing.md
+    type: standard
+    status: proposed
+    consult_when: [write-tests, validate-work]
+    applies_to: ["src/**", "tests/**"]
+    tags: [vitest, playwright, cobertura, nfr]
+
+  - id: security
+    path: docs/04-security.md
+    type: standard
+    status: proposed
+    consult_when: [write-code, change-security]
+    applies_to: ["src/**", "manifest.config.*", "package.json", "package-lock.json"]
+    tags: [mv3, xss, permissoes, dependencias]
+
+  - id: git-workflow
+    path: docs/05-git-workflow.md
+    type: process
+    status: proposed
+    consult_when: [commit-and-pr]
+    applies_to: [".github/**", ".gitignore"]
+    tags: [git, conventional-commits, pull-request]
+
+  - id: code-review
+    path: docs/06-code-review.md
+    type: checklist
+    status: proposed
+    consult_when: [review-code, validate-work]
+    applies_to: ["src/**", "tests/**"]
+    tags: [revisao, bloqueio]
+
+  - id: quality-gates
+    path: docs/07-quality-gates.md
+    type: process
+    status: proposed
+    consult_when: [validate-work, commit-and-pr]
+    applies_to: ["src/**", "tests/**", "package.json", ".github/**"]
+    tags: [ci, qualidade, definicao-de-pronto]
